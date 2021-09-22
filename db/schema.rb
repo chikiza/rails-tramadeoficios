@@ -10,9 +10,67 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2021_09_22_043519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "crafts", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "proyects", force: :cascade do |t|
+    t.bigint "craft_id", null: false
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["craft_id"], name: "index_proyects_on_craft_id"
+    t.index ["user_id"], name: "index_proyects_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "proyect_id", null: false
+    t.string "title"
+    t.text "comment"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["proyect_id"], name: "index_reviews_on_proyect_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "social_networks", force: :cascade do |t|
+    t.string "name"
+    t.string "url"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "user"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.integer "age"
+    t.string "occupation"
+    t.string "country"
+    t.string "city"
+    t.bigint "craft_id", null: false
+    t.bigint "social_network_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["craft_id"], name: "index_users_on_craft_id"
+    t.index ["social_network_id"], name: "index_users_on_social_network_id"
+  end
+
+  add_foreign_key "proyects", "crafts"
+  add_foreign_key "proyects", "users"
+  add_foreign_key "reviews", "proyects"
+  add_foreign_key "reviews", "users"
+  add_foreign_key "users", "crafts"
+  add_foreign_key "users", "social_networks"
 end
