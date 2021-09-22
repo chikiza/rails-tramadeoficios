@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_22_043519) do
+ActiveRecord::Schema.define(version: 2021_09_22_053228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,7 +54,6 @@ ActiveRecord::Schema.define(version: 2021_09_22_043519) do
     t.string "user"
     t.string "first_name"
     t.string "last_name"
-    t.string "email"
     t.integer "age"
     t.string "occupation"
     t.string "country"
@@ -63,7 +62,14 @@ ActiveRecord::Schema.define(version: 2021_09_22_043519) do
     t.bigint "social_network_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.index ["craft_id"], name: "index_users_on_craft_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["social_network_id"], name: "index_users_on_social_network_id"
   end
 
@@ -71,6 +77,6 @@ ActiveRecord::Schema.define(version: 2021_09_22_043519) do
   add_foreign_key "proyects", "users"
   add_foreign_key "reviews", "proyects"
   add_foreign_key "reviews", "users"
-  add_foreign_key "users", "crafts"
-  add_foreign_key "users", "social_networks"
+  add_foreign_key "crafts", "users"
+  add_foreign_key "social_networks", "users"
 end
