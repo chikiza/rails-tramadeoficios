@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_22_043519) do
+ActiveRecord::Schema.define(version: 2021_10_02_058950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 2021_09_22_043519) do
   end
 
   create_table "proyects", force: :cascade do |t|
-    t.bigint "craft_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "craft_id"
+    t.bigint "user_id"
     t.string "name"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 2021_09_22_043519) do
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "proyect_id", null: false
+    t.bigint "user_id"
+    t.bigint "proyect_id"
     t.string "title"
     t.text "comment"
     t.datetime "created_at", precision: 6, null: false
@@ -54,23 +54,23 @@ ActiveRecord::Schema.define(version: 2021_09_22_043519) do
     t.string "user"
     t.string "first_name"
     t.string "last_name"
-    t.string "email"
     t.integer "age"
     t.string "occupation"
     t.string "country"
     t.string "city"
-    t.bigint "craft_id", null: false
-    t.bigint "social_network_id", null: false
+    t.bigint "craft_id"
+    t.bigint "social_network_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.index ["craft_id"], name: "index_users_on_craft_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["social_network_id"], name: "index_users_on_social_network_id"
   end
 
-  add_foreign_key "proyects", "crafts"
-  add_foreign_key "proyects", "users"
-  add_foreign_key "reviews", "proyects"
-  add_foreign_key "reviews", "users"
-  add_foreign_key "users", "crafts"
-  add_foreign_key "users", "social_networks"
 end
