@@ -1,8 +1,8 @@
 class CreateReviews < ActiveRecord::Migration[6.0]
   def change
     create_table :reviews do |t|
-      t.references :user, null: false, foreign_key: true
-      t.references :proyect, null: false, foreign_key: true
+      t.references :user
+      t.references :proyect
       t.string :title
       t.text :comment
 
